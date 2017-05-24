@@ -18,11 +18,6 @@
 //   NEO_RGBW    Pixels are wired for RGBW bitstream (NeoPixel RGBW products)
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(120, PIN, NEO_GRB + NEO_KHZ800);
 
-// IMPORTANT: To reduce NeoPixel burnout risk, add 1000 uF capacitor across
-// pixel power leads, add 300 - 500 Ohm resistor on first pixel's data input
-// and minimize distance between Arduino and first pixel.  Avoid connecting
-// on a live circuit...if you must, connect GND first.
-
 const int SENSOR_LEFT_PIN = 2;
 const int SENSOR_RIGHT_PIN = 3;
 
@@ -36,9 +31,6 @@ closetLight lights[ARRAY_SIZE] = {
 
 
 void setup() {
-  
-  Serial.begin(9600);
-
   strip.begin();
   strip.show(); // Initialize all pixels to 'off'
 
@@ -57,22 +49,4 @@ void loop() {
   }
 }
 
-//void colorWipe(uint32_t c, uint8_t wait) {
-//  for(uint16_t i=0; i<strip.numPixels(); i++) {
-//    strip.setPixelColor(i, c);
-//    strip.show();
-//    delay(wait);
-//  }
-//}
-//
-//
-//void colorWipe(uint32_t c, uint8_t wait, uint8_t start, uint8_t number) {
-////  for(uint16_t i=0; i<strip.numPixels(); i++) {
-//  uint8_t stopAt = start+number;
-//  for(uint16_t i=start; i<stopAt; i++) {
-//    strip.setPixelColor(i, c);
-//    strip.show();
-//    delay(wait);
-//  }
-//}
 
