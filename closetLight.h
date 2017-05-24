@@ -7,6 +7,7 @@ class closetLight {
   public:
   
     closetLight(int s, int f, int l, Adafruit_NeoPixel *str, unsigned long t);
+    closetLight(int s, int f, int l, Adafruit_NeoPixel *str, unsigned long t, uint32_t c);
     ~closetLight();
     void init();
     void process();
@@ -20,6 +21,7 @@ class closetLight {
     Adafruit_NeoPixel *strip;
     Bounce debouncer;
     bool currentState;
+    uint32_t onColor;
     uint32_t color;
     int ledPos;
     unsigned long onAt;

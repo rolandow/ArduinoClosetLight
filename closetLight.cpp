@@ -7,7 +7,19 @@ closetLight::closetLight(int s, int f, int l, Adafruit_NeoPixel *str, unsigned l
   strip = str;
   currentState = 0;
   timeOut = t;
+  onColor = str->Color(0,0,255);
 }
+
+closetLight::closetLight(int s, int f, int l, Adafruit_NeoPixel *str, unsigned long t, uint32_t c) {
+  sensorPin = s;
+  firstLed = f;
+  lastLed = l;
+  strip = str;
+  currentState = 0;
+  timeOut = t;
+  onColor = c;
+}
+
 
 closetLight::~closetLight() {/*nothing to destruct*/}
 
@@ -15,17 +27,6 @@ void closetLight::init() {
     pinMode(sensorPin, INPUT_PULLUP);
     debouncer.attach(sensorPin);
     debouncer.interval(30);
-
-    Serial.print("P ");
-    Serial.print(sensorPin);
-    Serial.print(" ");
-    Serial.print(firstLed);
-    Serial.print(" ");
-    Serial.print(lastLed);
-    Serial.print(" ");
-    Serial.print(timeOut);
-    
-    Serial.println();
 
     initLed();
 }
@@ -49,7 +50,7 @@ void closetLight::process() {
     currentState = state;
 
     if (currentState == true) {
-      color = strip->Color(0,0,255);
+      color = onColor;
       onAt = millis();
     }
     else {
@@ -57,13 +58,6 @@ void closetLight::process() {
     }
 
     ledPos = firstLed;
-    
-    Serial.print("St ");
-    Serial.print(sensorPin);
-    Serial.print(" ");
-    Serial.print(state);
-    Serial.println();
-    
   }
 
   if (ledPos < lastLed) {
@@ -75,7 +69,6 @@ void closetLight::process() {
   if (currentState == true && (onAt > 0) && (millis()-onAt >= timeOut)) 
   {
     onAt = 0;
-    Serial.println("Auto off");
     color = strip->Color(0,0,0);
     ledPos = firstLed;
   }
